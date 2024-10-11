@@ -1,0 +1,305 @@
+% !TEX TS-program = xelatex
+\documentclass[11pt, letter]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[vmargin=3cm, hmargin=2.5cm]{geometry}
+\usepackage{enumitem} % fancier lists
+
+% Use Palatino font
+\usepackage{fontspec}
+\setmainfont[BoldFont=texgyrepagella-bold.otf, ItalicFont=texgyrepagella-italic.otf, BoldItalicFont=texgyrepagella-bolditalic.otf]{texgyrepagella-regular.otf}
+
+% Define custom environments
+\usepackage{environ}
+
+% Disable hyphenation in the CV
+\usepackage[none]{hyphenat}
+
+% Configure paragraph spacings
+\setlength{\parindent}{0cm} % Remove indentations
+
+% Configure the font style for sections
+\usepackage{titlesec}
+\titleformat{\section}
+    [hang] % the default shape for sections
+    {\normalfont\LARGE\bfseries} % format
+    {} % label
+    {0pt} % separation (left separation for hang)
+    {} % before title
+    [\titlerule] % after title
+\titleformat{\subsection}
+    [hang] % the default shape for sections
+    {\large\MakeUppercase} % format
+    {} % label
+    {0pt} % separation (left separation for hang)
+    {} % before title
+\titlespacing*{\section}
+    {0pt} % left margin
+    {0pt} % space before title
+    {2.5ex} % separation between title and text
+\titlespacing*{\subsection}
+    {0pt} % left margin
+    {-1.5em} % space before title
+    {2.5ex} % separation between title and text
+
+% Disable number of sections. Use this instead of "section*" so that the
+% sections still appear as PDF bookmarks. Otherwise, would have to add the
+% table of contents entries manually.
+\makeatletter
+\renewcommand{\@seccntformat}[1]{}
+\makeatother
+
+% Configure fancyhdr
+\usepackage{fancyhdr}
+\usepackage{lastpage} % get the total page numbers (\pageref{LastPage})
+\fancyhf{}  % clear current head and footer
+\fancyfoot[C]{\small \thepage{} of~\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0cm} % remove header rule
+\pagestyle{fancy}
+
+% Define new colors
+\usepackage{xcolor}
+\definecolor{mygray}{HTML}{555555}
+
+ % Define multipage tables (used for cv entries)
+\usepackage{tabularx}
+\usepackage{ltablex}
+
+% Boolean operators
+\usepackage{ifthen}
+
+% -----------
+% Information
+% -----------
+\newcommand{\firstname}{Santiago}
+\newcommand{\middlename}{Rebolé}
+\newcommand{\familyname}{Canals}
+\newcommand{\email}{xantideorreaga@gmail.com}
+
+% ------------
+
+
+% --------------------------
+% Variables and environments
+% --------------------------
+% New variables
+\newcommand{\fullname}{\firstname{} \middlename{} \familyname}
+
+% Titles and headings
+\newcommand{\maintitle}[1]{%
+    \begin{flushleft}
+        \textbf{\Huge #1}
+    \end{flushleft}
+}
+
+% Entries
+\newcommand{\entriespad}{0.75em}
+\NewEnviron{cventries}{
+    \vspace{-1em}
+    \begin{tabularx}{\textwidth}{p{0.12\textwidth} p{0.82\textwidth}}
+        \BODY{}
+    \end{tabularx}
+}
+\newcommand{\singleline}[2]{{#1} & {#2} \vspace{\entriespad} \\}
+\newcommand{\multiline}[3]{{#1} & {\textbf{#2} \newline {#3}} \vspace{0.6em} \\}
+\newcommand{\paper}[5]{%
+    {#1}
+    &
+    {\textbf{#2}, \emph{#3} \newline {#4} \newline doi:~\DOI{#5}}
+    \vspace{\entriespad} \\
+}
+\newcommand{\talk}[5]{%
+    {#1}
+    &
+    {%
+        \textbf{#2}, \emph{#3}%
+        \ifthenelse{\equal{#4}{}}{}{\newline {#4}}%
+        \ifthenelse{\equal{#5}{}}{}{\newline doi:~\DOI{#5}}%
+    }
+    \vspace{\entriespad} \\
+}
+
+% Macros
+\newcommand{\MAIL}[1]{%
+    \href{mailto:#1}{#1}
+}
+\newcommand{\GITHUB}[1]{%
+    \href{https://github.com/#1}{github.com/#1}
+}
+\newcommand{\ORCID}[1]{%
+    \href{https://orcid.org/#1}{#1}
+}
+\newcommand{\WEBSITE}[1]{%
+    \href{https://#1}{#1}
+}
+\newcommand{\DOI}[1]{%
+    \href{https://www.doi.org/#1}{#1}
+}
+
+% ------------------
+% Configure hyperref
+% ------------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    allcolors=[rgb]{0, 0.451, 0.753},
+    pdftitle={\fullname{}'s Curriculum Vitae},
+    pdfauthor={\fullname},
+}
+\urlstyle{same}
+
+% ------------------------------------------------------------------------
+
+\begin{document}
+
+
+% ------
+% Header
+% ------
+\maintitle{\fullname}
+
+\section{Experience}
+
+\begin{cventries}
+    \multiline{2023--on}{Geophysicist - University of Atacama (Copiapó, Chile)}{%
+    \newline
+         Evaluation of Python libraries (pygimli, simpeg, GPRPy, BERT, ResIPy, razorback, SigMT) and softwares (Res2dinv, RADAN7, WTEM-2) for geophysical inversion and modelling.\newline
+         Data collection and processing from Atacama desert aquifers, glaciers and permafrost using ERT, TDEM, and seismics.\newline
+         Organizing geophysicial surveys and expeditions to: Copiapó Valley, Atacama desert, Nevado Ojos del Salado volcano and Barrancas Blancas glacier.\newline
+    }
+    
+    \multiline{2022--2023}{Geophysical programmer - National Geographic Institute (Madrid, Spain)}{%
+        \newline
+        Analysis of the seismic atributes using machine learning with ObsPy and MATLAB routines. Some of the codes were modified in order to obtain specific results. The earthquakes were recorded in the Iberian Peninsula. \newline
+    }
+    \multiline{2023}{Lecturer and exhibition organizer - Visitor's Centre (Lumbier, Spain)}{%
+        \newline
+        Organization of geological conferences and exhibitions explaining the origin of the Pyrenees and the Lumbier Canyon (Foz de Lumbier).\newline 
+        
+    }
+    \multiline{2021--2022}{English Teacher - Bekith (Bilbao, Spain)}{% 
+      \newline
+    }
+    \multiline{2021--2022}{Music Teacher - (Bilbao, Spain)}{% 
+      \newline
+      Composition and musical analysis teacher.
+      \newline
+    }
+    \multiline{2021}{Lecturer and exhibition organizer - Visitor's Centre (Lumbier, Spain)}{%
+        \newline
+        English, science and humanities teacher. Organization of activities for the children and elderly in Szczecin, Western Poland. 
+        
+    }
+     \multiline{2019}{Counselor and teacher - Camp Davern (Ontario, Canada)}{%
+        \newline
+        Counselor, lifeguard and teacher at a camp in the canadian woods. 
+        
+    }
+    \multiline{2017}{Natural Conservationist - Icelandic Volunteering Program(Skaftafell, Iceland)}{%
+        \newline
+        Volunteering in preservation activities in Skaftafell National Park, southern Iceland. 
+        
+    }
+    \multiline{2016}{Research Assistant - Public University of Navarra (Pamplona, Spain)}{%
+        \newline
+        Field work assisting the Ecology Group of the Public University of Navarra taking soil, rock and plant samples from Roncesvalles/Irati Forest Area in northern Spain. 
+        
+    }
+      \multiline{2015}{Lab Assistant - University of Navarra (Pamplona, Spain)}{%
+        \newline
+        Lab work with DNA samples.
+        
+    }
+    
+\end{cventries}
+
+
+\section{Education}
+
+\begin{cventries}
+    \multiline{2022 -- 2023}{MSc in Geophysics and Meteorology - Complutense University of Madrid (Madrid, Spain)}{%
+    \newline MSc thesis: 'Determination of elastic thickness and lithospheric deflection in Antarctica in view of rising temperatures'. Field work at the Guadarrama Mountain Range, extracting samples for paleomagnetism analysis and conducting geophysical surveys.
+        
+    }
+
+    \multiline{2023}{Python Course for Geophysicists - Complutense University of Madrid (Madrid, Spain)}{%
+     \newline Python course specialized in geophysical data analysis.  
+     
+    }
+     \multiline{2024 -- on }{MSc in Geographic Information Systems with free software - MappingGIS(Valladolid, Spain)}{%
+     \newline MSc especialized in QGIS, geospatial analysis, PyQGIS, QGIS with R, PostGIS and webmapping.
+
+     }
+
+     \multiline{2017 -- 2022 }{BSc in Geology -- University of the Basque Country (Bilbao, Spain)}{%
+     Exchange year at University of Salamanca. BSc thesis: 'Geology of the Lumbier Canyon (Western Pyrenees, Spain)'. 
+     \newline 
+     }
+     \multiline{2013 -- 2019}{Professional Degree in Music -- Bilbao Conservatory (Bilbao, Spain)}{%
+     Specialized in bassoon, clarinet and composition.
+      }
+      
+\end{cventries}
+
+\section{Certifications}
+
+\begin{cventries}
+    \singleline{2024}{%
+    Basic-Intermediate level in QGIS (MappingGIS)
+        
+    }
+
+    \singleline{2016}{%
+    First Aid and Assistance Diploma (DYA Navarra)
+        
+    }
+\end{cventries}
+
+\section{Courses}
+
+\begin{cventries}
+    \multiline{2019}{ Public University of Navarra Summer Course}{%
+        Regional course concerning Citizen's Science celebrated at Bertiz Natural Park (Baztán Valley, northern Navarre)
+        
+        
+\end{cventries}
+
+
+\section{Publications}
+\begin{cventries}
+\subsection{Peer-reviewed publications}
+    \paper{2024}
+        {Seismic Investigation of the Ojos del Salado Volcano, Chile: The highest altitude volcano in the world!}
+        {Poster session presented at EGU 2024}
+        {Murray-Bergquist L., Garcia-Piña A., Thorwart M., Ulloa C., van Ginkel J., van Huisstede L., Rebolé-Canals S., Wessels R., Beniest A.}
+    \paper{2024}
+        {Un geofísico pamplonés en el desierto de Atacama}
+        {Diario de Navarra}
+        {Sanz-Elizalde F., Rebolé-Canals S.}  
+    
+\end{cventries}
+
+\section{Technical Skills}
+
+\begin{description}
+    \item[Programming] Python, Rust, bash, FORTRAN, C
+    \item[Scientific Python] NumPy, Matplotlib, Pandas, Xarray, Numba, Dask,
+        SimPEG, PyGMT
+    \item[Markup] Markdown, LaTeX, HTML, RST
+    \item[WebDev] CSS, Bootstrap, PicoCSS, Static Site Generators (jekyll,
+        zola, urubu), Jinja2 and Tera
+    \item[DevOps] GNU/Linux, Unix terminal, VIM, Neovim, git, GNU Make, SSH,
+        Ansible, nginx, ufw
+    \item[Graphic Design] Inkscape, GIMP, imagemagick, Darktable
+    \item[Other tools] Jupyter Notebooks, LibreOffice Suite, PGP, GitHub
+        Actions, Nextcloud, maxima
+\end{description}
+
+\section{Languages}
+
+\begin{description}
+    \item[Spanish] Native
+    \item[English] Advanced
+    \item[Italian] Beginner
+\end{description}
+
+\end{document}
